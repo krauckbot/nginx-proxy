@@ -1,0 +1,10 @@
+# SSL certificates (regenerate these in production)
+ssl/*.crt
+ssl/*.key
+
+# Sensitive files
+nginx/.htpasswd
+
+# Docker
+.env
+*.log

@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  nginx-proxy:
+    build: .
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # For live config updates without rebuild (optional)
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    networks:
+      - proxy-network
+
+networks:
+  proxy-network:
+    driver: bridge
